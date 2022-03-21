@@ -1,27 +1,27 @@
 package teste;
 
 public class Controle {
-    String modelo;
+    public String modelo;
 
-    int canal;
+    public int canal;
 
-    int volume;
+    public int volume;
 
-    boolean ligado;
+    protected boolean ligado;
 
 
-    void status(){
+    public void status(){
         System.out.println("Modelo: " + this.modelo);
         System.out.println("Volume: " + this.volume);
         System.out.println("Canal: " + this.canal);
         System.out.println("Está ligado?  " + this.ligado);
     }
 
-    void ligar()  {
+    protected void ligar()  {
         this.ligado = true;
     }
 
-    void desligar() {
+    protected void desligar() {
         this.ligado = false;
     }
 
