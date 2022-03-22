@@ -1,63 +1,118 @@
 package teste;
 
-public class Controle {
-    public String modelo;
-
-    public int canal;
-
-    public int volume;
-
-    protected boolean ligado;
+public class Controle implements Controlador{
+    //atributos
+    private String modelo;
+    private int volume;
+    private boolean ligado;
+    private boolean tocando;
 
     public Controle() {
         this.setModelo("Panasonic");
+        this.setVolume(50);
+        this.setTocando(false);
+        this.setLigado(false);
     }
 
-    public String getModelo() {
+    private String getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo) {
+    private void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public int getCanal() {
-        return canal;
-    }
-
-    public void setCanal(int canal) {
-        this.canal = canal;
-    }
-
-    public int getVolume() {
+    private int getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    private void setVolume(int volume) {
         this.volume = volume;
     }
 
-    public boolean isLigado() {
+    private boolean isLigado() {
         return ligado;
     }
 
-    public void setLigado(boolean ligado) {
+    private void setLigado(boolean ligado) {
         this.ligado = ligado;
     }
 
-    public void status(){
+    private boolean isTocando() {
+        return tocando;
+    }
+
+    private void setTocando(boolean tocando) {
+        this.tocando = tocando;
+    }
+
+
+    @Override
+    public void ligar() {
+        this.setLigado(true);
+    }
+
+    @Override
+    public void desligar() {
+        this.setLigado(false);
+    }
+
+    @Override
+    public void abrirMenu() {
         System.out.println("Modelo: " + this.getModelo());
-        System.out.println("Volume: " + this.getVolume());
-        System.out.println("Canal: " + this.getCanal());
-        System.out.println("Está ligado?  " + this.isLigado());
+        System.out.println("Está ligado: " + this.isLigado());
+        System.out.println("Está tocando: " + this.isTocando());
+        System.out.print("Volume: " + this.getVolume());
+        for (int i = 0 ; i <= this.getVolume() ; i+=10){
+            System.out.print("|");
+        }
+
     }
 
-    protected void ligar()  {
-        this.ligado = true;
+    @Override
+    public void fecharMenu() {
+        System.out.println("Fechando o Menu.");
     }
 
-    protected void desligar() {
-        this.ligado = false;
+    @Override
+    public void maisVolume() {
+        if (this.isLigado()){
+            this.setVolume(this.getVolume()+1);
+        }
     }
 
+    @Override
+    public void menosVolume() {
+        if (this.isLigado()){
+            this.setVolume(getVolume()-1);
+        }
+    }
+
+    @Override
+    public void ligarMudo() {
+        if(this.isLigado() && this.getVolume() > 0) {
+            this.setVolume(0);
+        }
+    }
+
+    @Override
+    public void desligarMudo() {
+        if (this.isLigado() && this.getVolume() == 0) {
+            this.setVolume(50);
+        }
+    }
+
+    @Override
+    public void play() {
+        if (this.isLigado() && !(this.isTocando())){
+            this.setTocando(true);
+        }
+    }
+
+    @Override
+    public void pause() {
+        if (this.isLigado() && this.isTocando()) {
+            this.setTocando(false);
+        }
+    }
 }
